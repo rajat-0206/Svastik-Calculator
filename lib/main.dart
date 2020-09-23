@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(MaterialApp(
-      home: MyApp(),
+      home: Splash(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.teal,
       ),
     ));
+
+class Splash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SplashScreen(
+      seconds: 5,
+      navigateAfterSeconds: new MyApp(),
+      title: new Text(
+        'Rajat\'s Calculator',
+        textScaleFactor: 2,
+      ),
+      image: new Image.asset('images/calculator.png'),
+      loadingText: Text("Loading"),
+      photoSize: 70.0,
+      loaderColor: Colors.blue,
+    );
+  }
+}
 
 class MyApp extends StatefulWidget {
   @override
