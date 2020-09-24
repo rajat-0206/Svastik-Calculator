@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -37,8 +38,8 @@ class _MyAppState extends State<MyApp> {
   String equation = "0";
   String result = "0";
   String expression = "";
-  double equationsize = 38.0;
-  double answersize = 48.0;
+  double equationsize = 28.0;
+  double answersize = 38.0;
 
   calcresult() {
     expression = equation;
@@ -51,8 +52,8 @@ class _MyAppState extends State<MyApp> {
       } catch (e) {
         result = "Error";
       }
-      equationsize = 38.0;
-      answersize = 48.0;
+      equationsize = 28.0;
+      answersize = 38.0;
     });
   }
 
@@ -66,17 +67,17 @@ class _MyAppState extends State<MyApp> {
         equation = equation.substring(0, equation.length - 1);
         if (equation == "") {
           equation = "0";
-          equationsize = 38.0;
-          answersize = 48.0;
+          equationsize = 28.0;
+          answersize = 38.0;
         }
       } else if (value == "AC") {
         equation = "0";
         result = "0";
-        equationsize = 38.0;
-        answersize = 48.0;
-      } else {
-        equationsize = 48.0;
+        equationsize = 28.0;
         answersize = 38.0;
+      } else {
+        equationsize = 38.0;
+        answersize = 28.0;
         if (equation == "0") {
           equation = value;
         } else {
@@ -106,50 +107,55 @@ class _MyAppState extends State<MyApp> {
       body: Column(
         children: <Widget>[
           Container(
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
-              child: Text(
+              alignment: Alignment.bottomRight,
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: AutoSizeText(
                 equation,
+                maxLines: 3,
                 style: TextStyle(fontSize: equationsize),
               )),
           Container(
               alignment: Alignment.centerRight,
-              padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: Text(
                 result,
                 style: TextStyle(fontSize: answersize),
               )),
           Expanded(child: Divider()),
-          Row(
-            children: <Widget>[
-              keys("1", Colors.teal[300]),
-              keys("2", Colors.teal[300]),
-              keys("3", Colors.teal[300]),
-              keys("+", Colors.lightBlue),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              keys("4", Colors.teal[300]),
-              keys("5", Colors.teal[300]),
-              keys("6", Colors.teal[300]),
-              keys("-", Colors.lightBlue),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              keys("7", Colors.teal[300]),
-              keys("8", Colors.teal[300]),
-              keys("9", Colors.teal[300]),
-              keys("*", Colors.lightBlue),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              keys(".", Colors.teal[300]),
-              keys("0", Colors.teal[300]),
-              keys("00", Colors.teal[300]),
-              keys("/", Colors.lightBlue),
+          Column(
+            children: [
+              Row(
+                children: <Widget>[
+                  keys("1", Colors.teal[300]),
+                  keys("2", Colors.teal[300]),
+                  keys("3", Colors.teal[300]),
+                  keys("+", Colors.lightBlue),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  keys("4", Colors.teal[300]),
+                  keys("5", Colors.teal[300]),
+                  keys("6", Colors.teal[300]),
+                  keys("-", Colors.lightBlue),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  keys("7", Colors.teal[300]),
+                  keys("8", Colors.teal[300]),
+                  keys("9", Colors.teal[300]),
+                  keys("*", Colors.lightBlue),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  keys(".", Colors.teal[300]),
+                  keys("0", Colors.teal[300]),
+                  keys("00", Colors.teal[300]),
+                  keys("/", Colors.lightBlue),
+                ],
+              ),
             ],
           ),
           Row(
