@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'dart:async';
 
 void main() => runApp(MaterialApp(
       title: "Svastik Calculator",
@@ -17,6 +19,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  dynamic night;
   String equation = "0";
   String result = "0";
   String expression = "";
@@ -69,21 +72,47 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    var temp = FlutterSession().get("nightmode");
+    if (temp == null) {
+      night = "False";
+    } else {
+      night = temp;
+      print(night);
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: night == "False" ? Colors.white : Colors.black87,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Image.asset(
-          "images/calculator.png",
-          height: 100,
-          width: 100,
-        ),
+        backgroundColor: night == "False" ? Colors.grey[200] : Colors.blue[900],
+        elevation: 5,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                if (night == "False") {
+                  night = "True";
+                } else {
+                  night = "False";
+                }
+                FlutterSession().set("nightmode", night);
+              });
+            },
+            icon: Icon(
+              night == "False" ? Icons.wb_sunny : Icons.nights_stay,
+              color: night == "False" ? Colors.orange[900] : Colors.white,
+            ),
+          ),
+        ],
         title: Text(
           "Svastik Calculator",
           style: TextStyle(
-            color: Colors.black,
-          ),
+              color: night == "False" ? Colors.black : Colors.white,
+              fontFamily: "Arial"),
         ),
       ),
       body: Column(
@@ -94,56 +123,65 @@ class _MyAppState extends State<MyApp> {
               child: AutoSizeText(
                 equation,
                 maxLines: 3,
-                style: TextStyle(fontSize: equationsize),
+                style: TextStyle(
+                    color: night == "False" ? Colors.black : Colors.white,
+                    fontSize: equationsize),
               )),
           Container(
               alignment: Alignment.centerRight,
               padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: Text(
                 result,
-                style: TextStyle(fontSize: answersize),
+                style: TextStyle(
+                  fontSize: answersize,
+                  color: night == "False" ? Colors.black : Colors.white,
+                ),
               )),
           Expanded(child: Divider()),
           Column(
             children: [
               Row(
                 children: <Widget>[
-                  keys("1", Colors.teal[300]),
-                  keys("2", Colors.teal[300]),
-                  keys("3", Colors.teal[300]),
-                  keys("+", Colors.lightBlue),
+                  keys("1", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys("2", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys("3", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys(
+                      "+", night == "False" ? Colors.lightBlue : Colors.indigo),
                 ],
               ),
               Row(
                 children: <Widget>[
-                  keys("4", Colors.teal[300]),
-                  keys("5", Colors.teal[300]),
-                  keys("6", Colors.teal[300]),
-                  keys("-", Colors.lightBlue),
+                  keys("4", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys("5", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys("6", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys(
+                      "-", night == "False" ? Colors.lightBlue : Colors.indigo),
                 ],
               ),
               Row(
                 children: <Widget>[
-                  keys("7", Colors.teal[300]),
-                  keys("8", Colors.teal[300]),
-                  keys("9", Colors.teal[300]),
-                  keys("*", Colors.lightBlue),
+                  keys("7", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys("8", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys("9", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys(
+                      "*", night == "False" ? Colors.lightBlue : Colors.indigo),
                 ],
               ),
               Row(
                 children: <Widget>[
-                  keys(".", Colors.teal[300]),
-                  keys("0", Colors.teal[300]),
-                  keys("00", Colors.teal[300]),
-                  keys("/", Colors.lightBlue),
+                  keys(".", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys("0", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys("00", night == "False" ? Colors.teal[300] : Colors.teal),
+                  keys(
+                      "/", night == "False" ? Colors.lightBlue : Colors.indigo),
                 ],
               ),
             ],
           ),
           Row(
             children: <Widget>[
-              keys("C", Colors.red),
-              keys("AC", Colors.red),
+              keys("C", night == "False" ? Colors.red : Colors.red[900]),
+              keys("AC", night == "False" ? Colors.red : Colors.red[900]),
               specialkey("=", Colors.teal),
             ],
           ),
@@ -158,7 +196,9 @@ class _MyAppState extends State<MyApp> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
           side: BorderSide(
-              color: Colors.white, width: 1, style: BorderStyle.solid)),
+              color: night == "False" ? Colors.white : Colors.grey,
+              width: 1,
+              style: BorderStyle.solid)),
       padding: EdgeInsets.fromLTRB(20, 36, 20, 36),
       onPressed: () => buttonpressed(val),
       child: Text(
@@ -168,7 +208,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       color: setcolor,
-      textColor: Colors.black,
+      textColor: night == "False" ? Colors.black : Colors.white,
     ));
   }
 
@@ -179,7 +219,9 @@ class _MyAppState extends State<MyApp> {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
               side: BorderSide(
-                  color: Colors.white, width: 1, style: BorderStyle.solid)),
+                  color: night == "False" ? Colors.white : Colors.grey,
+                  width: 1,
+                  style: BorderStyle.solid)),
           padding: EdgeInsets.fromLTRB(20, 36, 20, 36),
           onPressed: () => calcresult(),
           child: Text(
@@ -189,7 +231,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           color: setcolor,
-          textColor: Colors.black,
+          textColor: night == "False" ? Colors.black : Colors.white,
         ));
   }
 }

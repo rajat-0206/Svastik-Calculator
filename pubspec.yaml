@@ -29,6 +29,7 @@ dependencies:
   math_expressions: ^2.0.1
   auto_size_text: ^2.1.0
   flutter_launcher_icons: "^0.8.0"
+  flutter_session: ^0.1.1
   
 dev_dependencies:
   flutter_test:
