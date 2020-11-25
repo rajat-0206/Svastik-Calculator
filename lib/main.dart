@@ -1,33 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(MaterialApp(
-      home: Splash(),
+      title: "Svastik Calculator",
+      home: MyApp(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.teal,
       ),
     ));
-
-class Splash extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SplashScreen(
-      seconds: 5,
-      navigateAfterSeconds: new MyApp(),
-      title: new Text(
-        'Rajat\'s Calculator',
-        textScaleFactor: 2,
-      ),
-      image: new Image.asset('images/calculator.png'),
-      loadingText: Text("Loading"),
-      photoSize: 70.0,
-      loaderColor: Colors.blue,
-    );
-  }
-}
 
 class MyApp extends StatefulWidget {
   @override
@@ -98,7 +80,7 @@ class _MyAppState extends State<MyApp> {
           width: 100,
         ),
         title: Text(
-          "Calculator",
+          "Svastik Calculator",
           style: TextStyle(
             color: Colors.black,
           ),
